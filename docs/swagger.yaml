@@ -1,0 +1,30 @@
+info:
+  contact: {}
+paths:
+  /test:
+    post:
+      consumes:
+      - application/json
+      description: 协同开发接口样式测试
+      parameters:
+      - description: 下面填写用户id
+        in: body
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: 填写姓名
+        in: body
+        name: name
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: JSON
+      summary: test测试
+swagger: "2.0"
