@@ -2,6 +2,7 @@ package main
 
 import (
 	_ "gin-wall/docs"
+	"gin-wall/middleware"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -16,6 +17,7 @@ type Person struct {
 
 func main() {
 	r := gin.Default()
+	r.Use(middleware.Cors())
 	r.POST("/test", test)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.Run(":8082")

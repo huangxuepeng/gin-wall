@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.1 // indirect
+	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-openapi/swag v0.21.1 // indirect
 	github.com/iris-contrib/swagger v0.0.0-20210110101208-2670b336b278
