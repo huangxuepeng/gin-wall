@@ -25,7 +25,7 @@ func main() {
 // @description 协同开发接口样式测试
 // @accept json
 // @produce json
-// @success 200 {JSON} test
+// @success 200 {string}
 // @param id body int true "下面填写用户id"
 // @param name body string true "填写姓名"
 // @router /test [post]

@@ -25,6 +25,6 @@ paths:
         "200":
           description: OK
           schema:
-            type: JSON
+            type: string
       summary: test测试
 swagger: "2.0"

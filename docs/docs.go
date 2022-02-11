@@ -50,7 +50,7 @@ const docTemplate_swagger = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "JSON"
+                            "type": "string"
                         }
                     }
                 }
