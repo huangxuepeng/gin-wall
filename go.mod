@@ -1,11 +1,10 @@
 module gin-wall
 
-go 1.11
+go 1.15
 
 require (
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.7.7
-	github.com/go-openapi/swag v0.21.1 // indirect
 	github.com/iris-contrib/swagger v0.0.0-20210110101208-2670b336b278
 	github.com/iris-contrib/swagger/v12 v12.0.1
 	github.com/mailru/easyjson v0.7.7 // indirect
