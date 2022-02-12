@@ -1,4 +1,4 @@
-kill -9 $(lsof -i:8082 -t)
+kill -9 $(lsof -i:8080 -t)
 go build -o main
 BUILD_ID=DONTKILLME
 cd /var/lib/jenkins/workspace/git-wall
