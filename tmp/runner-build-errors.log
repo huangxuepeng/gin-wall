@@ -1,0 +1,2 @@
+util\email.go:9:2: no required module provides package github.com/jordan-wright/email; to add it:
+	go get github.com/jordan-wright/email
