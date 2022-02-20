@@ -7,11 +7,25 @@ import (
 )
 
 func InitUserRouter(Router *gin.RouterGroup) {
+	// TestRouter := Router.Group("test")
+	// {
+	// 	// TestRouter.GET("test", api.Test) //测试函数
+	// }
 	AdminRouter := Router.Group("admin")
 	{
-		AdminRouter.POST("register", api.UserRegisters) //用户注册
-		AdminRouter.POST("login", api.UserLogin)        //用户登录
-		AdminRouter.POST("realname", api.RealName)      //用户实名
-		AdminRouter.DELETE("delete", api.Delete)        //用户注销账号
+		AdminRouter.POST("getlist", api.GetList)             //用户查询
+		AdminRouter.POST("getrealname", api.GetRealNameList) //实名用户的列表
+
+	}
+
+	// ForumRouter := Router.Group("forum")
+	// {
+
+	// }
+	UserRouter := Router.Group("user")
+	{
+		UserRouter.POST("register", api.UserRegisters) //用户注册
+		UserRouter.POST("login", api.UserLogin)        //用户登录
+		UserRouter.POST("realname", api.RealName)      //用户实名
 	}
 }

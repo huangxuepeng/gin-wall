@@ -27,6 +27,7 @@ type UserRegister struct {
 	Mobile              string `gorm:"index;type:char(11);column:mobile;unique;not null;comment '手机号码'"`
 	NickName            string `gorm:"type:varchar(15);column:nick_name;not null;comment '昵称'"`
 	Avatar              string `gorm:"type:varchar(100);column:avatar;comment '头像'"`
+	StudentNumber       string `gorm:"index;type:char(9);unique;not null;comment '学号'"`
 	Email               string `gorm:"type:varchar(50);column:email;not null;comment '邮箱'"`
 	Password            string `gorm:"type:varchar(150);column:password;not null;cpment '密码'"`
 	Sex                 uint8  `gorm:"column:sex;comment '1 代表男生 0 代表女生'"`
@@ -55,7 +56,6 @@ type UserRealname struct {
 	Age            uint8  `gorm:"type:varchar(4);not null;comment '年龄'"`
 	TeacherName    string `gorm:"type:varchar(20);comment '导师姓名(允许为空)'"`
 	UserRegisterID uint
-	TeacherID      uint
 }
 
 //期末总结(先不写)

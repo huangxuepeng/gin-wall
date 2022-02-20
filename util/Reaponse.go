@@ -3,7 +3,7 @@ package util
 import "github.com/gin-gonic/gin"
 
 func Success(c *gin.Context, code int,
-	errors string, message string, data map[string]interface{}) {
+	errors interface{}, message string, data map[string]interface{}) {
 	c.JSON(code, gin.H{
 		"code":    code,
 		"success": true,
