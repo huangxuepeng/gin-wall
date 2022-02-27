@@ -27,7 +27,7 @@ type Register struct {
 }
 
 type Login struct {
-	Mobile   int    `form:"mobile" json:"mobile" binding:"required"`
+	Mobile   string `form:"mobile" json:"mobile" binding:"required"`
 	Password string `form:"password" json:"password" binding:"required"`
 }
 
@@ -41,6 +41,7 @@ func UserRegisters(c *gin.Context) {
 		errs, ok := err2.(validator.ValidationErrors)
 		if !ok {
 			util.Fail(c, 400, err2.Error(), "信息输入有误", data)
+			fmt.Println("你好")
 			return
 		}
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -52,6 +53,7 @@ func UserRegisters(c *gin.Context) {
 		})
 		return
 	}
+	fmt.Println(register)
 	// 验证手机号码
 	if ok := util.ValidateMobile(register.Mobile); !ok {
 		util.Fail(c, 400, "手机号码不正确", "注册失败", data)
@@ -76,12 +78,12 @@ func UserRegisters(c *gin.Context) {
 	user.Password = password
 	user.StudentNumber = register.StudentNumber
 	user.BinningTime = strconv.Itoa(int(time.Now().Unix()))
-	res := dao.DB.Create(&user) //注册成功存入数据库
-	if res.Error != nil {
-		util.Fail(c, 400, "失败", "注册失败", nil)
-		return
-	}
-	util.Success(c, 200, "", "注册成功", data)
+	// res := dao.DB.Create(&user) //注册成功存入数据库
+	// if res.Error != nil {
+	// 	util.Fail(c, 400, "失败", "注册失败", nil)
+	// 	return
+	// }
+	util.Success(c, 200, "", "注册成功", map[string]interface{}{"data": user})
 }
 
 // 用户登录
@@ -89,16 +91,17 @@ func UserLogin(c *gin.Context) {
 	data := map[string]interface{}{}
 	var login Login
 	var user models.UserRegister
+	fmt.Println(c.PostForm("mobile"))
 	if err := c.ShouldBind(&login); err != nil {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			util.Fail(c, 400, errs.Error(), "信息输入有误", data)
+			util.Fail(c, 400, errs.Error(), "信息输入有误1", data)
 			return
 		}
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    400,
 			"success": false,
-			"message": "输入信息有误",
+			"message": "输入信息有误2",
 			"error":   util.RemoveTopStruct(errs.Translate(global.Trans)),
 			"data":    gin.H{},
 		})

@@ -1,2 +1,2 @@
-# gin-wall/models
-models\admin.go:10:10: cannot use u.ISReal (type uint8) as type bool in return argument
+# gin-wall/api
+api\public.go:86:73: syntax error: unexpected }, expecting expression

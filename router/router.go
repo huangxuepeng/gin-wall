@@ -13,8 +13,9 @@ func InitUserRouter(Router *gin.RouterGroup) {
 	// }
 	AdminRouter := Router.Group("admin")
 	{
-		AdminRouter.POST("getlist", api.GetList)             //用户查询
+		AdminRouter.GET("getlist", api.GetList)              //用户查询
 		AdminRouter.POST("getrealname", api.GetRealNameList) //实名用户的列表
+		AdminRouter.POST("binning", api.BinningUser)         //拉黑用户, 对用户的进行短暂的封号
 
 	}
 
