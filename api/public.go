@@ -78,11 +78,11 @@ func UserRegisters(c *gin.Context) {
 	user.Password = password
 	user.StudentNumber = register.StudentNumber
 	user.BinningTime = strconv.Itoa(int(time.Now().Unix()))
-	// res := dao.DB.Create(&user) //注册成功存入数据库
-	// if res.Error != nil {
-	// 	util.Fail(c, 400, "失败", "注册失败", nil)
-	// 	return
-	// }
+	res := dao.DB.Create(&user) //注册成功存入数据库
+	if res.Error != nil {
+		util.Fail(c, 400, "失败", "注册失败", nil)
+		return
+	}
 	util.Success(c, 200, "", "注册成功", map[string]interface{}{"data": user})
 }
 

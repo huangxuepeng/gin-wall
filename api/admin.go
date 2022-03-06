@@ -8,6 +8,7 @@ import (
 	"gin-wall/util"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -15,6 +16,11 @@ import (
 
 type Bin struct {
 	BinTime string `form:"bin_time" json:"bin_time" binding:"required"`
+}
+
+type PutReal struct {
+	id     int `form:"id" json:"id" binding:"require"`
+	isreal int `form:"isreal" json:"isreal" binding:"isreal"`
 }
 
 func GetList(c *gin.Context) {
@@ -53,6 +59,7 @@ func GetRealNameList(c *gin.Context) {
 // 管理员对用户进行拉黑处理
 func BinningUser(c *gin.Context) {
 	var b Bin
+	var user models.UserRegister
 	if err := c.ShouldBind(&b); err != nil {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
@@ -69,7 +76,30 @@ func BinningUser(c *gin.Context) {
 		return
 	}
 	//将前端传来的时间进行格式化
-	// timeN := "2006-01-02 15:04:05"
-	// timeS, _ := time.Parse(timeN, b.BinTime)
+	timeN := "2006-01-02 15:04:05"
+	timeS, _ := time.Parse(timeN, b.BinTime) //解析时间
 
+	//更新数据库
+	time := timeS.Unix()
+	//将新生成的数据更新数据库
+	res := dao.DB.Model(&user).Where("ID = ?", ID).Update("binning_time", time)
+	if res.Error != nil {
+		util.Fail(c, 402, res.Error.Error(), "拉黑失败", nil)
+		return
+	}
+	util.Success(c, 200, nil, "更新成功", nil)
+
+}
+
+//对前端传来的数据进行
+
+// 实现管理员对用户进行认证成功的提交
+func PutRealName(c *gin.Context) {
+	// 获取前端传来的参数, 对参数进行操作
+	var put PutReal
+	if err := c.ShouldBindQuery(&put); err != nil {
+		fmt.Println("数据获取错误")
+		return
+	}
+	c.JSON(200, put)
 }

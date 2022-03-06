@@ -1,2 +1,2 @@
 # gin-wall/api
-api\public.go:86:73: syntax error: unexpected }, expecting expression
+api\admin.go:85:45: undefined: ID
