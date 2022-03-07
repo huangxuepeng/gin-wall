@@ -109,10 +109,11 @@ func UserLogin(c *gin.Context) {
 	}
 	res := dao.DB.Where("mobile=?", login.Mobile).First(&user)
 	if res.Error != nil {
+		util.Fail(c, 400, "请先完成注册再来登录吧", "登录失败", data)
 		return
 	}
 	if user.ID == 0 {
-		util.Fail(c, 402, "用户不存在或者密码错误", "登录失败", data)
+		util.Fail(c, 422, "请先完成注册再来登录吧", "登录失败", data)
 		return
 	}
 	if ok := dao.Jiemi(user.Password, login.Password); !ok {

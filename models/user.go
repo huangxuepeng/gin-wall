@@ -16,9 +16,9 @@ type Base struct {
 
 //评论, 动态的公共部分
 type DynamicInfo struct {
-	Like        uint
-	Unlike      uint
-	NumberFloor uint
+	Like        uint `gorm:"column:like; comment '点赞'; default: 0"`
+	Unlike      uint `gorm:"column:un_like; comment '踩'; default: 0"`
+	NumberFloor uint `gorm:"column:number_floor;comment '楼层的高度 按照点赞的数量来排序'"`
 }
 
 //用户注册
@@ -30,13 +30,14 @@ type UserRegister struct {
 	StudentNumber       string `gorm:"index;type:char(9);unique;not null;comment '学号'"`
 	Email               string `gorm:"type:varchar(50);column:email;not null;comment '邮箱'"`
 	Password            string `gorm:"type:varchar(150);column:password;not null;cpment '密码'"`
-	Sex                 uint8  `gorm:"column:sex;comment '1 代表男生 0 代表女生'"`
+	Sex                 uint8  `gorm:"column:sex;comment '1 代表男生 0 代表女生';default:0"`
 	Constellation       string `gorm:"type:varchar(10);column:constellation;comment '星座'"`
 	Role                uint8  `gorm:"type:varchar(5);column:role; comment '0 普通用户 1 老师 2 管理员';default:0"`
 	AuthenticationToken string `gorm:"type:varchar(196);column:authentication_token;comment '认证token'"`
 	EmailAuthentication string `gorm:"type:varchar(15);column:email_authentication;not null;comment '邮箱验证码'"`
 	BinningTime         string `gorm:"type:varchar(15);column:binning_time;comment '拉黑时间'"`
 	ISReal              uint8  `gorm:"column:is_real;not null;comment '0 未实名 1 已经实名';default:0"`
+	AdminID             uint   `gorm:"column:admin_id;comment '被审核之后存入的审核人的ID'"`
 	UserRealname        UserRealname
 	OnlineLog           []OnlineLog
 	InfoLog             []InfoLog
@@ -56,6 +57,7 @@ type UserRealname struct {
 	Age            uint8  `gorm:"type:varchar(4);not null;comment '年龄'"`
 	TeacherName    string `gorm:"type:varchar(20);comment '导师姓名(允许为空)'"`
 	UserRegisterID uint
+	TeacherID      uint
 }
 
 //期末总结(先不写)
