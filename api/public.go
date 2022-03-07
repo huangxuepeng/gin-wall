@@ -40,8 +40,7 @@ func UserRegisters(c *gin.Context) {
 	if err2 := c.ShouldBind(&register); err2 != nil {
 		errs, ok := err2.(validator.ValidationErrors)
 		if !ok {
-			util.Fail(c, 400, err2.Error(), "信息输入有误", data)
-			fmt.Println("你好")
+			util.Fail(c, 400, err2.Error(), errs.Error(), data)
 			return
 		}
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -80,7 +79,7 @@ func UserRegisters(c *gin.Context) {
 	user.BinningTime = strconv.Itoa(int(time.Now().Unix()))
 	res := dao.DB.Create(&user) //注册成功存入数据库
 	if res.Error != nil {
-		util.Fail(c, 400, "失败", "注册失败", nil)
+		util.Fail(c, 400, "失败", res.Error.Error(), nil)
 		return
 	}
 	util.Success(c, 200, "", "注册成功", map[string]interface{}{"data": user})
