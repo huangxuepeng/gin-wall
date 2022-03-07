@@ -25,7 +25,7 @@ type DynamicInfo struct {
 type UserRegister struct {
 	Base
 	Mobile              string `gorm:"index;type:char(11);column:mobile;unique;not null;comment '手机号码'"`
-	NickName            string `gorm:"type:varchar(15);column:nick_name;not null;comment '昵称'"`
+	NickName            string `gorm:"type:varchar(100);column:nick_name;not null;comment '昵称'"`
 	Avatar              string `gorm:"type:varchar(100);column:avatar;comment '头像'"`
 	StudentNumber       string `gorm:"index;type:char(9);unique;not null;comment '学号'"`
 	Email               string `gorm:"type:varchar(50);column:email;not null;comment '邮箱'"`
