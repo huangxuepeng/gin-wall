@@ -2,16 +2,17 @@ package router
 
 import (
 	"gin-wall/api"
+	"gin-wall/middleware"
 
 	"github.com/gin-gonic/gin"
 )
 
 func InitUserRouter(Router *gin.RouterGroup) {
-	TestRouter := Router.Group("test")
+	TestRouter := Router.Group("test").Use(middleware.AuthMiddleware())
 	{
 		TestRouter.GET("tt/:id", api.Test) //测试函数
 	}
-	AdminRouter := Router.Group("admin")
+	AdminRouter := Router.Group("admin").Use(middleware.AuthMiddleware())
 	{
 		AdminRouter.POST("getlist", api.GetList)                       //用户查询
 		AdminRouter.POST("getrealname", api.GetRealNameList)           //实名用户的列表
