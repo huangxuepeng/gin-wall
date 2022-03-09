@@ -8,17 +8,17 @@ import (
 )
 
 func InitUserRouter(Router *gin.RouterGroup) {
-	TestRouter := Router.Group("test").Use(middleware.AuthMiddleware())
+	TestRouter := Router.Group("test")
 	{
 		TestRouter.GET("tt/:id", api.Test) //测试函数
 	}
-	AdminRouter := Router.Group("admin").Use(middleware.AuthMiddleware())
+	AdminRouter := Router.Group("admin")
 	{
-		AdminRouter.POST("getlist", api.GetList)                       //用户查询
-		AdminRouter.POST("getrealname", api.GetRealNameList)           //实名用户的列表
-		AdminRouter.POST("binning", api.BinningUser)                   //拉黑用户, 对用户的进行短暂的封号
-		AdminRouter.GET("change/:id/:isReal", api.PutRealName)         //更新数据
-		AdminRouter.POST("authenticationuser", api.AuthenticationUser) //对实名信息是否成功的短信发送, 并且完成
+		AdminRouter.POST("getlist", api.GetList).Use(middleware.AuthMiddleware())                       //用户查询
+		AdminRouter.POST("getrealname", api.GetRealNameList).Use(middleware.AuthMiddleware())           //实名用户的列表
+		AdminRouter.POST("binning", api.BinningUser).Use(middleware.AuthMiddleware())                   //拉黑用户, 对用户的进行短暂的封号
+		AdminRouter.GET("change/:id/:isReal", api.PutRealName).Use(middleware.AuthMiddleware())         //更新数据
+		AdminRouter.POST("authenticationuser", api.AuthenticationUser).Use(middleware.AuthMiddleware()) //对实名信息是否成功的短信发送, 并且完成
 
 	}
 
