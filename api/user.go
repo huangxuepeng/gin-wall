@@ -1,6 +1,8 @@
 package api
 
 import (
+	"fmt"
+	"gin-wall/binding"
 	"gin-wall/dao"
 	"gin-wall/global"
 	"gin-wall/models"
@@ -88,4 +90,33 @@ func RealName(c *gin.Context) {
 		return
 	}
 	util.Success(c, 200, nil, "实名成功等待管理员审核吧", data)
+}
+
+// 通过ID查询数据
+func GetID(c *gin.Context) {
+	var getid binding.DeleteRealNames
+	var user models.UserRegister
+	if err := c.ShouldBindUri(&getid); err != nil {
+		errs, ok := err.(validator.ValidationErrors)
+		if !ok {
+			util.Fail(c, 400, errs.Error(), "信息输入有误", nil)
+			return
+		}
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    400,
+			"success": false,
+			"message": "输入信息有误",
+			"error":   util.RemoveTopStruct(errs.Translate(global.Trans)),
+			"data":    gin.H{},
+		})
+		return
+	}
+	fmt.Println(getid)
+	res := dao.DB.Where("ID = ?", getid.ID).First(&user)
+	if res.Error != nil {
+		util.Fail(c, 500, res.Error.Error(), "查找失败", nil)
+		return
+	}
+	util.Success(c, 200, nil, "加载成功", map[string]interface{}{"stunumber": user.StudentNumber, "nickname": user.NickName, "sex": user.Sex,
+		"mobile": user.Mobile, "email": user.Email, "createTime": user.CreatedAt})
 }

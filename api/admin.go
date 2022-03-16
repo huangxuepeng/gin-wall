@@ -123,6 +123,7 @@ func AuthenticationUser(c *gin.Context) {
 		})
 		return
 	}
+	fmt.Println(authen)
 	res := dao.DB.Where("student_num = ?", authen.VifystudentNum).First(&user)
 	if res.Error != nil {
 		return
@@ -131,5 +132,63 @@ func AuthenticationUser(c *gin.Context) {
 		util.Fail(c, 402, "输入的学号有误", "", nil)
 		return
 	}
-	// 将ID放入规定的地方
+	// vifyUser := user.ID
+	// // 将ID放入规定的地方
+	// dao.DB.Model()
+}
+
+// 用户实名信息的删除
+func DeleteRealName(c *gin.Context) {
+	var deleteUser binding.DeleteRealNames
+	var User models.UserRealname
+	//完成用户的删除(软删除)
+	if err := c.ShouldBindUri(&deleteUser); err != nil {
+		errs, ok := err.(validator.ValidationErrors)
+		if !ok {
+			util.Fail(c, 400, errs.Error(), "信息输入有误", nil)
+			return
+		}
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    400,
+			"success": false,
+			"message": "输入信息有误",
+			"error":   util.RemoveTopStruct(errs.Translate(global.Trans)),
+			"data":    gin.H{},
+		})
+		return
+	}
+	res := dao.DB.Delete(&User, deleteUser.ID)
+	if res.Error != nil {
+		util.Fail(c, 400, res.Error.Error(), "删除失败", nil)
+		return
+	}
+	util.Success(c, 200, nil, "成功", nil)
+}
+
+// 用户注册信息的删除
+func DeleteRegisterName(c *gin.Context) {
+	var deleteUser binding.DeleteRealNames
+	var User models.UserRegister
+	//完成用户的删除(软删除)
+	if err := c.ShouldBindUri(&deleteUser); err != nil {
+		errs, ok := err.(validator.ValidationErrors)
+		if !ok {
+			util.Fail(c, 400, errs.Error(), "信息输入有误", nil)
+			return
+		}
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    400,
+			"success": false,
+			"message": "输入信息有误",
+			"error":   util.RemoveTopStruct(errs.Translate(global.Trans)),
+			"data":    gin.H{},
+		})
+		return
+	}
+	res := dao.DB.Delete(&User, deleteUser.ID)
+	if res.Error != nil {
+		util.Fail(c, 400, res.Error.Error(), "删除失败", nil)
+		return
+	}
+	util.Success(c, 200, nil, "成功", nil)
 }

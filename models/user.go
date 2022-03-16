@@ -50,14 +50,17 @@ type UserRegister struct {
 //用户实名
 type UserRealname struct {
 	Base
-	StudentNumber  string `gorm:"index;type:char(9);unique;not null;comment '学号'"`
-	RealName       string `gorm:"type:varchar(20);not null;comment '真实姓名'"`
-	Academy        string `gorm:"type:varchar(20);not null;comment '学院'"`
-	Profession     string `gorm:"type:varchar(20);not null;comment '专业'"`
-	Age            uint8  `gorm:"type:varchar(4);not null;comment '年龄'"`
-	TeacherName    string `gorm:"type:varchar(20);comment '导师姓名(允许为空)'"`
-	UserRegisterID uint
-	TeacherID      uint
+	StudentNumber        string `gorm:"index;type:char(9);unique;not null;comment '学号'"`
+	School               string `gorm:"column:school;type:varchar(100);not null;comment '学校名称'"`
+	RealName             string `gorm:"column:real_name;type:varchar(20);not null;comment '真实姓名'"`
+	Academy              string `gorm:"column:academy;type:varchar(20);not null;comment '学院名称'"`
+	Profession           string `gorm:"column:type:varchar(20);not null;comment '专业'"`
+	Age                  uint8  `gorm:"column:age;type:varchar(4);not null;comment '年龄'"`
+	TeacherName          string `gorm:"column:teacher_name;type:varchar(20);comment '导师姓名(允许为空)'"`
+	DormitoryFloorNumber string `gorm:"column:dormitory_floor_number;type:varchar(5);comment '寝室楼号'"`
+	DormitoryNumber      string `gorm:"column:dormitory_number;type:varchar(5);comment '寝室号'"`
+	UserRegisterID       uint
+	TeacherID            uint
 }
 
 //期末总结(先不写)
@@ -131,6 +134,7 @@ type Forum struct {
 
 //文章信息(有可能有些人发表的文章字数比较多, 所以将文章的内容重新拿出来一张表)
 type Essay struct {
+	Base
 }
 
 //情侣关系表
