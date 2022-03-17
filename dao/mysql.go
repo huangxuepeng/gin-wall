@@ -14,7 +14,7 @@ var (
 )
 
 func InitMysql() {
-	dsn := "root:123456@tcp(127.0.0.1:3306)/gin_wall?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:12345678@tcp(127.0.0.1:3306)/gin_wall?charset=utf8mb4&parseTime=True&loc=Local"
 
 	//全局模式
 	var err error

@@ -41,6 +41,7 @@ type UserRegister struct {
 	UserRealname        UserRealname
 	OnlineLog           []OnlineLog
 	InfoLog             []InfoLog
+	LoginInfo           []LoginInfo
 	FinshSum            []FinshSum
 	DynamicInformation  []DynamicInformation
 	FatherComment       []FatherComment
@@ -94,7 +95,7 @@ type DynamicInformation struct {
 	DynamicInfo
 	Type           string `gorm:"type:varchar(20);column:type;comment '文章类型'"`
 	ISReal         uint8  `gorm:"default:0;comment '0 未认证 1 已认证'"`
-	AdminID        uint   `gorm:""`
+	AdminID        uint   `gorm:"column:admin_id;comment '用户的ID'"`
 	Report         uint8  `gorm:"default:0;comment '0 未被举报 1 被举报'"`
 	FatherComment  []FatherComment
 	UserRegisterID uint
@@ -105,7 +106,7 @@ type FatherComment struct {
 	Base
 	DynamicInfo
 	Comment              string `gorm:"type:varchar(255);column:comment;comment '评论内容'"`
-	Report               uint8  `gorm:"default:0;comment '0 未被举报 1 被举报'"`
+	Report               uint8  `gorm:"column:report;default:0;comment '0 未被举报 1 被举报'"`
 	SonComment           []SonComment
 	DynamicInformationID uint
 	UserRegisterID       uint
@@ -124,10 +125,15 @@ type SonComment struct {
 //日志信息  用户名 访问的url
 type InfoLog struct {
 	Base
-	URL            string `gorm:"type:varchar(255);column:url;comment 'url'"`
+	URL            string `gorm:"type:varchar(50);column:url;comment 'url'"`
 	UserRegisterID uint
 }
 
+// 登录事件记录
+type LoginInfo struct {
+	Base
+	UserRegisterID uint
+}
 type Forum struct {
 	Base
 }
