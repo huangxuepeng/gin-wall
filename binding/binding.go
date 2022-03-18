@@ -16,3 +16,9 @@ type DeleteRealNames struct {
 type GetStudentNumber struct {
 	StudentNumber string `form:"studentnumber" json:"studentnumber" binding:"min=0,max=9"`
 }
+
+// 获取c端传来的手机号码和密码
+type GetCPassword struct {
+	Mobile   string `form:"mobile" json:"mobile" binding:"required"`
+	Password string `form:"password" json:"password" binding:"required"`
+}
