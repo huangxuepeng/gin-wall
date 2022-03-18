@@ -43,11 +43,6 @@ func InitUserRouter(Router *gin.RouterGroup) {
 		UserRouter.POST("login", api.UserLogin)        //用户登录
 		UserRouter.POST("realname", api.RealName)      //用户实名
 		UserRouter.GET("getid/:id", api.GetID)         //实名的显示
-	}
-
-	// c端统一加密方式
-	Cpassword := Router.Group("passwordd")
-	{
-		Cpassword.POST("encryptt", api.CEncrypt) //对c端的密码进行数据
+		UserRouter.POST("encryptt", api.CEncrypt)      //对c端的密码进行数据
 	}
 }
