@@ -8,7 +8,11 @@ type Authenticationuser struct {
 }
 
 // 删除信息的绑定
-
 type DeleteRealNames struct {
 	ID int `uri:"id" json:"id" binding:"required"`
+}
+
+//获取前端传来的学号参数
+type GetStudentNumber struct {
+	StudentNumber string `form:"studentnumber" json:"studentnumber" binding:"min=0,max=9"`
 }

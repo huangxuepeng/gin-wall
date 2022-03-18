@@ -21,18 +21,31 @@ type Bin struct {
 
 func GetList(c *gin.Context) {
 	var users []models.UserRegister
+	var studentnumber binding.GetStudentNumber
 	//通过学号查询
-	like := c.Query("query")
-	names := c.PostForm("name")
-	fmt.Println(names)
-	if like == "" {
+	if err := c.ShouldBind(&studentnumber); err != nil {
+		errs, ok := err.(validator.ValidationErrors)
+		if !ok {
+			util.Fail(c, 400, errs.Error(), "信息输入有误", nil)
+			return
+		}
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    400,
+			"success": false,
+			"message": "输入信息有误",
+			"error":   util.RemoveTopStruct(errs.Translate(global.Trans)),
+			"data":    gin.H{},
+		})
+		return
+	}
+	if studentnumber.StudentNumber == "" {
 		result := dao.DB.Find(&users)
 		if result.Error != nil {
 			log.Println("GetUserList 数据库查询失败")
 			return
 		}
 	} else {
-		dao.DB.Where("student_number LIKE ?", fmt.Sprintf("%"+like+"%")).Find(&users)
+		dao.DB.Where("student_number LIKE ?", fmt.Sprintf("%"+studentnumber.StudentNumber+"%")).Find(&users)
 	}
 	util.Success(c, 200, nil, "查询成功", map[string]interface{}{"data": users})
 }

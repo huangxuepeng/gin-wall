@@ -97,6 +97,8 @@ type DynamicInformation struct {
 	ISReal         uint8  `gorm:"default:0;comment '0 未认证 1 已认证'"`
 	AdminID        uint   `gorm:"column:admin_id;comment '用户的ID'"`
 	Report         uint8  `gorm:"default:0;comment '0 未被举报 1 被举报'"`
+	Comment        string `gorm:"column:comment;type:varchar(255);comment '评论信息'"`
+	Cover          string `gorm:"column:cover;type:varchar(100);comment '封面'"`
 	FatherComment  []FatherComment
 	UserRegisterID uint
 }
@@ -132,6 +134,7 @@ type InfoLog struct {
 // 登录事件记录
 type LoginInfo struct {
 	Base
+	Address        string
 	UserRegisterID uint
 }
 type Forum struct {
@@ -140,6 +143,11 @@ type Forum struct {
 
 //文章信息(有可能有些人发表的文章字数比较多, 所以将文章的内容重新拿出来一张表)
 type Essay struct {
+	Base
+}
+
+// 权限业务分配
+type Business struct {
 	Base
 }
 
